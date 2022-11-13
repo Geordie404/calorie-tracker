@@ -1,7 +1,7 @@
 // model file with entry DB schema
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const entrySchema = new Schema({
+const EntrySchema = new Schema({
 
     // Person - User who made this entry
     username: {
@@ -29,5 +29,5 @@ const entrySchema = new Schema({
 });
 
 // Module exporting code
-const Entry = mongoose.model("Entry", entrySchema);
+const Entry = mongoose.model("Entry", EntrySchema);
 module.exports = Entry;

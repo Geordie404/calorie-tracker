@@ -1,7 +1,7 @@
 // model file with calories DB schema
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const userSchema = new Schema({
+const UserSchema = new Schema({
 
     // Person - User
     username: {
@@ -17,5 +17,5 @@ const userSchema = new Schema({
 });
 
 // Module exporting code
-const User = mongoose.model("User", userSchema);
+const User = mongoose.model("User", UserSchema);
 module.exports = User;
