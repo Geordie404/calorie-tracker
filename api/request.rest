@@ -1,3 +1,29 @@
+# ----- GET REQUESTS -----
 GET http://localhost:3002/entries
 ###
 GET http://localhost:3002/users
+
+# ----- POST REQUESTS ------
+
+###
+POST http://localhost:3002/user/new 
+Content-Type: application/json
+
+{
+    "_id": "bella",
+    "username": "Isabella",
+    "calories": 2400,
+    "protein": 130
+}
+
+###
+POST http://localhost:3002/entry/new 
+Content-Type: application/json
+
+{
+    "userId": "bella",
+    "entry": "rice",
+    "calories": 100,
+    "protein": 2
+    
+}

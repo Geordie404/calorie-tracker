@@ -4,10 +4,10 @@ const Schema = mongoose.Schema;
 const EntrySchema = new Schema({
 
     // Person - User who made this entry
-    username: {
-        type: String,
-        required: [true, 'Username is required']
-      },
+    userId: {
+      type: String,
+      required: [true, 'unique ID is required']
+    },
 
     // Food Item Name
     entry: {
@@ -15,17 +15,24 @@ const EntrySchema = new Schema({
         required: [true, 'Entry is required']
       },
 
-    // calories and protein for the entry
-	macros: {
-        calories: Number,
-        protein:  Number
+  
+    calories: {
+      type: Number,
+      required: [true, 'User caloric intake is required']
     },
+
+    protein: {
+      type: Number,
+      required: [true, 'User protien intake is required']
+    },
+      
+  
 
     // if the entry is considered in the calculation or not
     hidden: { type: Boolean, default: false },
     
     // date item was entered
-	date: { type: Date, default: Date.now }
+	  date: { type: Date, default: Date.now }
 });
 
 // Module exporting code

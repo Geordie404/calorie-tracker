@@ -1,21 +1,34 @@
 // model file with calories DB schema
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+
 const UserSchema = new Schema({
 
-    // Person - User
+    _id: {
+      type: String,
+      required: [true, 'ID is required']
+    },
+  
     username: {
-        type: String,
-        required: [true, 'Username is required']
-      },
+      type: String,
+      required: [true, 'Username is required']
+    },
+    
+    calories: {
+      type: Number,
+      required: [true, 'User caloric intake is required']
+    },
 
-    // metabolism calories
-    metaCalories: Number,
+    protein: {
+      type: Number,
+      required: [true, 'User protien intake is required']
+    },
 
-    // metabolism protein
-    metaProtein: Number
+    timestamp: {
+      type: String,
+      default: Date.now()
+    }
 });
 
-// Module exporting code
 const User = mongoose.model("User", UserSchema);
 module.exports = User;
