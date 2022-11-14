@@ -27,6 +27,16 @@ Content-Type: application/json
     "protein": 27
 }
 
+###
+POST http://localhost:3002/item/new/7
+Content-Type: application/json
+
+{
+    "entry": "lard",
+    "calories": 900,
+    "protein": 307
+}
+
 # ----- GET (UPDATE) REQUESTS ---------
 
 ###

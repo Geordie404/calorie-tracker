@@ -108,6 +108,21 @@ app.post('/item/new', (req, res) => {
 	res.json(item); // get back the json response with new user
 });
 
+// new item POST with user ID in url
+app.post('/item/new/:id', (req, res) => {
+    const day = getDay();
+    // json code for completing an item
+	const item = new Item({
+        userId: req.params.id,
+		entry: req.body.entry,
+        calories: req.body.calories,
+        protein: req.body.protein,
+        date: day
+	});
+	item.save(); // saves the user to our collection
+	res.json(item); // get back the json response with new user
+});
+
 
 // ------ API UPDATE requests -----
 
