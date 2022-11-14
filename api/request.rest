@@ -10,10 +10,10 @@ POST http://localhost:3002/user/new
 Content-Type: application/json
 
 {
-    "_id": 7,
-    "username": "Geordie",
-    "calories": 3200,
-    "protein": 180
+    "_id": 0,
+    "username": "empty",
+    "calories": 0,
+    "protein": 0
 }
 
 ###
@@ -50,6 +50,9 @@ GET http://localhost:3002/items/today/7
 
 ###
 GET http://localhost:3002/user/6
+
+###
+GET http://localhost:3002/users/6
 
 # ----- DELETE REQUESTS ------
 

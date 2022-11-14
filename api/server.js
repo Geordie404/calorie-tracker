@@ -64,6 +64,13 @@ app.get('/items/:id', async (req, res) => {
 
 //  gets a users caloric information
 app.get('/user/:id', async (req, res) => {
+	const user = await User.findOne({_id:req.params.id})
+
+	res.json(user);
+});
+
+//  gets a users caloric information
+app.get('/users/:id', async (req, res) => {
 	const user = await User.find({_id:req.params.id})
 
 	res.json(user);

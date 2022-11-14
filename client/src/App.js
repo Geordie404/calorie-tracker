@@ -7,17 +7,17 @@ function App() {
 
   const [items, setItems] = useState([]);
   const [users, setUsers] = useState([]);
-	const [popupActive, setPopupActive] = useState(false);
+ 	const [popupActive, setPopupActive] = useState(false);
 	const [newItem, setNewItem] = useState("");
   const [newItemEntry, setNewItemEntry] = useState("");
   const [newItemCal, setNewItemCal] = useState("");
   const [newItemPro, setNewItemPro] = useState("");
-  const globalUserID = 0; // using this for now to keep track of who is signed in
+
 
 
   // runs on page load, eventually move load calories to a button associated with user
 	useEffect(() => {
-		// getItems();
+		getItems(); // all items associated with any user
 	}, []);
 
 
@@ -25,7 +25,6 @@ function App() {
  function changeUser(id){
     getUsers(id);
     getUserItems(id);
-    globalUserID = id;
  }
 
 
@@ -43,9 +42,17 @@ function App() {
       .catch((err) => console.error("Error: ", err));
   }
 
-  // get user information
+    // get user information returns document of one users
+    const getUser = async id => {
+      await fetch(api_base + '/user/' + id)
+        .then(res => res.json())
+        .then(data => setUsers(data))
+        .catch((err) => console.error("Error: ", err));
+    }
+
+  // get user information returns array of users
   const getUsers = async id => {
-    await fetch(api_base + '/user/' + id)
+    await fetch(api_base + '/users/' + id)
       .then(res => res.json())
       .then(data => setUsers(data))
       .catch((err) => console.error("Error: ", err));
@@ -88,6 +95,10 @@ function App() {
 		setItems(items => items.filter(item => item._id !== data.result._id));
 	}
 
+  const goBack = () => {
+    changeUser(0)
+  }
+
   return (
     <div className="App">
       <h1>Calorie Tracker</h1>
@@ -96,18 +107,33 @@ function App() {
       <div className="todays-totals">
         {users.length > 0 ? users.map(user => (
             <div className="user" key={user._id}>
-              <div className="todays-user">Welcome {user.username}!</div>
-              <div className="todays-cals">Calories {user.calories}</div>
-              <div className="todays-protein">Protein {user.protein}g</div>
+              {user._id == 0 &&
+                <div>
+                  <div>Sign In!</div>
+                    <div className="buttons">
+                      <button onClick={() => changeUser(7)}>Geordie</button>
+                      <button onClick={() => changeUser(6)}>Bella</button>
+                    </div>
+                </div>
+              }
+              {user._id != 0 &&
+              <div>
+                <div className="todays-user">Welcome {user.username}</div>
+                <div className="todays-cals">Calories x/{user.calories}</div>
+                <div className="todays-protein">Protein y/{user.protein}g</div>
+                {/* go back button appears once user is signed in */}
+                <div className="goBack" onClick={() => goBack()}>back</div>
+              </div>
+              }
             </div>
           )) : (
             <div className="user">
               {/* testing buttons */}
-            <div>Sign In!</div>
-            <div className="buttons">
-              <button onClick={() => changeUser(7)}>Geordie</button>
-              <button onClick={() => changeUser(6)}>Bella</button>
-            </div>
+              <div>Sign In!</div>
+              <div className="buttons">
+                <button onClick={() => changeUser(7)}>Geordie</button>
+                <button onClick={() => changeUser(6)}>Bella</button>
+              </div>
             </div>
           )}
       </div>
@@ -119,9 +145,9 @@ function App() {
               "item" + (item.hidden ? " is-hidden" : " is-active")
             } key={item._id}>
               <div className="checkbox"></div>
-              <div className="name">{item.entry}</div>
-              <div className="calories">Calories {item.calories}</div>
-              <div className="protein">Protein {item.protein}g</div>
+              <div className="name">{item.entry}...</div>
+              <div className="calories">Calories {item.calories}...</div>
+              <div className="protein">Protein {item.protein}g...</div>
               <div className="delete-item" onClick={() => deleteItem(item._id)}>x</div>
             </div>
           )) : (
@@ -133,6 +159,7 @@ function App() {
       {/* pop up button for adding items */}
 
       <div className="addPopup" onClick={() => setPopupActive(true)}>+</div>
+      
 
 			{popupActive ? (
 				<div className="popup">
@@ -147,7 +174,9 @@ function App() {
             <label for="pro">Protein
               <input id= "pro" type="text" className="add-item-input" onChange={e => setNewItemPro(e.target.value)} value={newItemPro} />
             </label>
-						<div className="button" onClick={() => addItem(globalUserID)}>Add Item</div>
+            {users.map(user => (
+						<div className="button" onClick={() => addItem(user._id)}>Add Item</div>
+            )) }
 					</div>
 				</div>
 			) : ''}

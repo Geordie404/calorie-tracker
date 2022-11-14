@@ -2,6 +2,8 @@
 :root {
 	--primary: #D81E5B;
 	--secondary: #8A4EFC;
+  --green-one: rgb(8, 180, 210);
+  --green-two: rgb(18, 98, 2);
 	--light: #EEE;
 	--light-alt: #61759b;
 	--dark: #131A26;
@@ -122,6 +124,27 @@ button {
 	color: var(--light);
 	background-color: var(--primary);
 	background-image: linear-gradient(to bottom right, var(--primary), var(--secondary));
+	cursor: pointer;
+}
+
+/* css for go back */
+
+.goBack {
+	position: fixed;
+	bottom: 32px;
+	left: 32px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	width: 64px;
+	height: 64px;
+	border-radius: 999px;
+	font-size: 18px;
+	font-weight: 900;
+	color: var(--light);
+	background-color: var(--primary);
+	background-image: linear-gradient(to bottom left, var(--green-one), var(--green-two));
 	cursor: pointer;
 }
 
