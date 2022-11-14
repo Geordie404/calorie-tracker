@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 
 // Base API route
-const api_base = 'http://localhost:3002S';
+const api_base = 'http://localhost:3002';
 
 function App() {
 
@@ -12,7 +12,7 @@ function App() {
 
   // runs on page load, eventually move load calories to a button associated with user
 	useEffect(() => {
-		GetUserItems(1);
+		GetUserItems(6); // bella id is 6
 	}, []);
 
 
@@ -32,37 +32,45 @@ function App() {
 			.catch((err) => console.error("Error: ", err));
 	}
 
+  const hideItem = async id => {
+		const data = await fetch(api_base + '/item/hide/' + id).then(res => res.json());
+
+		setItems(items => items.map(item => {
+			if (item._id === data._id) {
+				item.complete = data.complete;
+			}
+
+			return item;
+		}));
+		
+	}
+
   return (
     <div className="App">
       <h1>Welcome to Cal Track</h1>
 
       {/* for users daily totals */}
       <div className="todays-totals">
-        <div className="todays-cals">calories</div>
-        <div className="todays-protein">protein</div>
+        <div className="todays-user">welcome user</div>
+        <div className="todays-cals">user calories</div>
+        <div className="todays-protein">user protein</div>
       </div>
 
       {/* list of added items */}
       <div className="items">
-        {items.length > 0 ? items.map(todo => (
+        {items.length > 0 ? items.map(item => (
             <div className={
-              "item" + (todo.hidden ? " is-hidden" : "is-active")
+              "item" + (item.hidden ? " is-hidden" : " is-active")
             } key={item._id} onClick={() => hideItem(item._id)}>
               <div className="checkbox"></div>
-
-              <div className="item-name">{item.text}</div>
-              <div className="item-calories">{item.calories}</div>
-              <div className="item-protein">{item.protein}</div>
-
-              <div className="hide-todo">x</div>
+              <div className="name">{item.entry}</div>
+              <div className="calories">Calories: {item.calories}</div>
+              <div className="protein">Protein: {item.protein}</div>
+              <div className="delete" >X</div>
             </div>
           )) : (
             <p>You currently have no items today</p>
           )}
-          <div className="item">item name</div>
-          <div className="calories">100</div>
-          <div className="protein">8</div>
-          <div className="hide">x</div>
       </div>
 
 

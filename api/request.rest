@@ -22,9 +22,9 @@ Content-Type: application/json
 
 {
     "userId": 6,
-    "item": "food",
-    "calories": 90,
-    "protein": 10
+    "entry": "a bean",
+    "calories": 4,
+    "protein": 1
 }
 
 # ----- GET (UPDATE) REQUESTS ---------
@@ -33,10 +33,10 @@ Content-Type: application/json
 GET http://localhost:3002/item/hide/6371858f33314bc9f3163780
 
 ###
-GET http://localhost:3002/items/1
+GET http://localhost:3002/items/7
 
 ###
-GET http://localhost:3002/todays-items/1
+GET http://localhost:3002/todays-items/6
 
 # ----- DELETE REQUESTS ------
 
@@ -44,4 +44,4 @@ GET http://localhost:3002/todays-items/1
 DELETE http://localhost:3002/item/delete/6371835f3dd20c4120c9dc88
 
 ###
-DELETE http://localhost:3002/user/delete/4
+DELETE http://localhost:3002/user/delete/5

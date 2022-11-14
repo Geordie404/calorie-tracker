@@ -92,7 +92,7 @@ app.post('/item/new', (req, res) => {
     // json code for completing an item
 	const item = new Item({
         userId: req.body.userId,
-		item: req.body.item,
+		entry: req.body.entry,
         calories: req.body.calories,
         protein: req.body.protein,
         date: day

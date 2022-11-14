@@ -10,7 +10,7 @@ const ItemSchema = new Schema({
     },
 
     // Food Item Name
-    item: {
+    entry: {
         type: String,
         required: [true, 'Item is required']
       },
