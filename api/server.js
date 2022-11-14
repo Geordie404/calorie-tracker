@@ -34,8 +34,17 @@ const Entry = require('./models/Entry');
 
 
 // ----- API GET requests -----
+
+// gets all entries or users
 app.get('/entries', async (req, res) => {
 	const entries = await Entry.find();
+
+	res.json(entries);
+});
+
+//  
+app.get('/entries/:id', async (req, res) => {
+	const entries = await Entry.find({userId:req.params.id})
 
 	res.json(entries);
 });
@@ -62,14 +71,51 @@ app.post('/user/new', (req, res) => {
 
 // new entry POST
 app.post('/entry/new', (req, res) => {
+    // date code for timezone conversion
+    const today = new Date();
+    const offset = today.getTimezoneOffset();
+    const yourDate = new Date(today.getTime() - (offset*60*1000));
+    const time = yourDate.toISOString().substring(0,10);
+    // json code for completing an entry
 	const entry = new Entry({
         userId: req.body.userId,
 		entry: req.body.entry,
         calories: req.body.calories,
-        protein: req.body.protein
+        protein: req.body.protein,
+        date: time
 	});
 	entry.save(); // saves the user to our collection
 	res.json(entry); // get back the json response with new user
+});
+
+
+// ------ API UPDATE requests -----
+
+app.get('/entry/hide/:id', async (req, res) => {
+	const entry = await Entry.findById(req.params.id);
+
+	entry.hidden = !entry.hidden;
+
+	entry.save();
+
+	res.json(entry);
+})
+
+
+// ------ API DELETE requests -----
+
+// entry DELETE
+app.delete('/entry/delete/:id', async (req, res) => {
+	const result = await Entry.findByIdAndDelete(req.params.id);
+
+	res.json({result});
+});
+
+// user DELETE
+app.delete('/user/delete/:id', async (req, res) => {
+	const result = await User.findByIdAndDelete(req.params.id);
+
+	res.json({result});
 });
 
 

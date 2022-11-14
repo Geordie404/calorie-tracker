@@ -5,7 +5,7 @@ const EntrySchema = new Schema({
 
     // Person - User who made this entry
     userId: {
-      type: String,
+      type: Number,
       required: [true, 'unique ID is required']
     },
 
@@ -32,7 +32,7 @@ const EntrySchema = new Schema({
     hidden: { type: Boolean, default: false },
     
     // date item was entered
-	  date: { type: Date, default: Date.now }
+	  date: { type: String, default: Date.now }
 });
 
 // Module exporting code
