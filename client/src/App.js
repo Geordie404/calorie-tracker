@@ -6,54 +6,74 @@ const api_base = 'http://localhost:3002';
 function App() {
 
   const [items, setItems] = useState([]);
+  const [users, setUsers] = useState([]);
 	const [popupActive, setPopupActive] = useState(false);
 	const [newItem, setNewItem] = useState("");
 
 
   // runs on page load, eventually move load calories to a button associated with user
 	useEffect(() => {
-		GetUserItems(6); // bella id is 6
+		getItems();
 	}, []);
 
+ function changeUser(id){
+    getUsers(id);
+    getUserItems(id);
+ }
 
-  // get items from today from a specified user ID
-  const GetItems = () => {
+
+  // Test Functions
+  function allItems() {
+    alert('All items!');
+    getItems();
+  }
+
+  // get all items
+  const getItems = () => {
     fetch(api_base + '/items/')
       .then(res => res.json())
       .then(data => setItems(data))
       .catch((err) => console.error("Error: ", err));
   }
+
+  // get user information
+  const getUsers = async id => {
+    await fetch(api_base + '/user/' + id)
+      .then(res => res.json())
+      .then(data => setUsers(data))
+      .catch((err) => console.error("Error: ", err));
+  }
  
   // get items from today from a specified user ID
-  const GetUserItems = (id) => {
-		fetch(api_base + '/todays-items/' + id)
-			.then(res => res.json())
-			.then(data => setItems(data))
-			.catch((err) => console.error("Error: ", err));
-	}
-
-  const hideItem = async id => {
-		const data = await fetch(api_base + '/item/hide/' + id).then(res => res.json());
-
-		setItems(items => items.map(item => {
-			if (item._id === data._id) {
-				item.complete = data.complete;
-			}
-
-			return item;
-		}));
-		
-	}
+  const getUserItems = async id => {
+    const data = await fetch(api_base + '/items/today/' + id)
+    .then(res => res.json())
+    .then(data => setItems(data))
+    .catch((err) => console.error("Error: ", err));
+  }
 
   return (
     <div className="App">
-      <h1>Welcome to Cal Track</h1>
+      <h1>Calorie Tracker</h1>
 
       {/* for users daily totals */}
       <div className="todays-totals">
-        <div className="todays-user">welcome user</div>
-        <div className="todays-cals">user calories</div>
-        <div className="todays-protein">user protein</div>
+        {users.length > 0 ? users.map(user => (
+            <div className="user" key={user._id}>
+              <div className="todays-user">Welcome {user.username}!</div>
+              <div className="todays-cals">Calories {user.calories}</div>
+              <div className="todays-protein">Protein {user.protein}g</div>
+            </div>
+          )) : (
+            <div className="user">
+              {/* testing buttons */}
+            <div>Sign In!</div>
+            <div className="buttons">
+              <button onClick={() => changeUser(7)}>Geordie</button>
+              <button onClick={() => changeUser(6)}>Bella</button>
+            </div>
+            </div>
+          )}
       </div>
 
       {/* list of added items */}
@@ -61,11 +81,11 @@ function App() {
         {items.length > 0 ? items.map(item => (
             <div className={
               "item" + (item.hidden ? " is-hidden" : " is-active")
-            } key={item._id} onClick={() => hideItem(item._id)}>
+            } key={item._id}>
               <div className="checkbox"></div>
               <div className="name">{item.entry}</div>
-              <div className="calories">Calories: {item.calories}</div>
-              <div className="protein">Protein: {item.protein}</div>
+              <div className="calories">Calories {item.calories}</div>
+              <div className="protein">Protein {item.protein}g</div>
               <div className="delete" >X</div>
             </div>
           )) : (

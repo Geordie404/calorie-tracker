@@ -39,6 +39,35 @@ h4 {
 	margin-bottom: 16px;
 }
 
+/* CSS for buttons */
+button {
+	position: relative;
+	background-color: var(--light-alt);
+	padding: 16px;
+	border-radius: 16px;
+	align-items: center;
+	transition: 0.5s;
+	cursor: pointer;
+	margin: 16px;
+}
+
+/* CSS for user */
+
+.user {
+  font-size: 24px;
+	position: relative;
+	background-color: var(--dark);
+	padding: 16px;
+	border-radius: 16px;
+	/* display: flex; */
+	align-items: center;
+	transition: 0.5s;
+	cursor: pointer;
+	margin-bottom: 16px;
+}
+
+
+
 /* CSS for items */
 
 .item {

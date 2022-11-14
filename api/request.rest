@@ -21,10 +21,10 @@ POST http://localhost:3002/item/new
 Content-Type: application/json
 
 {
-    "userId": 6,
-    "entry": "a bean",
-    "calories": 4,
-    "protein": 1
+    "userId": 7,
+    "entry": "cream",
+    "calories": 800,
+    "protein": 27
 }
 
 # ----- GET (UPDATE) REQUESTS ---------
@@ -36,7 +36,10 @@ GET http://localhost:3002/item/hide/6371858f33314bc9f3163780
 GET http://localhost:3002/items/7
 
 ###
-GET http://localhost:3002/todays-items/6
+GET http://localhost:3002/items/today/7
+
+###
+GET http://localhost:3002/user/6
 
 # ----- DELETE REQUESTS ------
 

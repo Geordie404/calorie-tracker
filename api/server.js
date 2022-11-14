@@ -62,8 +62,15 @@ app.get('/items/:id', async (req, res) => {
 	res.json(items);
 });
 
+//  gets a users caloric information
+app.get('/user/:id', async (req, res) => {
+	const user = await User.find({_id:req.params.id})
+
+	res.json(user);
+});
+
 //  gets all items of a user today
-app.get('/todays-items/:id', async (req, res) => {
+app.get('/items/today/:id', async (req, res) => {
     const day = getDay();
 	const items = await Item.find({userId:req.params.id, date:day})
 
