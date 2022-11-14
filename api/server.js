@@ -31,6 +31,13 @@ const atlasURI =
 const User = require('./models/User');
 const Entry = require('./models/Entry');
 
+function getDay(){
+    const today = new Date();
+    const offset = today.getTimezoneOffset();
+    const yourDate = new Date(today.getTime() - (offset*60*1000));
+    const day = yourDate.toISOString().substring(0,10);
+    return day;
+}
 
 
 // ----- API GET requests -----
@@ -42,18 +49,28 @@ app.get('/entries', async (req, res) => {
 	res.json(entries);
 });
 
-//  
+app.get('/users', async (req, res) => {
+	const users = await User.find();
+
+	res.json(users);
+});
+
+//  gets all entries of a user
 app.get('/entries/:id', async (req, res) => {
 	const entries = await Entry.find({userId:req.params.id})
 
 	res.json(entries);
 });
 
-app.get('/users', async (req, res) => {
-	const users = await User.find();
+//  gets all entries of a user today
+app.get('/todays-entries/:id', async (req, res) => {
+    const day = getDay();
+	const entries = await Entry.find({userId:req.params.id, date:day})
 
-	res.json(users);
+	res.json(entries);
 });
+
+
 
 // ----- API POST requests ------
 
@@ -71,18 +88,14 @@ app.post('/user/new', (req, res) => {
 
 // new entry POST
 app.post('/entry/new', (req, res) => {
-    // date code for timezone conversion
-    const today = new Date();
-    const offset = today.getTimezoneOffset();
-    const yourDate = new Date(today.getTime() - (offset*60*1000));
-    const time = yourDate.toISOString().substring(0,10);
+    const day = getDay();
     // json code for completing an entry
 	const entry = new Entry({
         userId: req.body.userId,
 		entry: req.body.entry,
         calories: req.body.calories,
         protein: req.body.protein,
-        date: time
+        date: day
 	});
 	entry.save(); // saves the user to our collection
 	res.json(entry); // get back the json response with new user
