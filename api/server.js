@@ -29,7 +29,7 @@ const atlasURI =
     
 // Acquire Models
 const User = require('./models/User');
-const Entry = require('./models/Entry');
+const Item = require('./models/Item');
 
 function getDay(){
     const today = new Date();
@@ -42,11 +42,11 @@ function getDay(){
 
 // ----- API GET requests -----
 
-// gets all entries or users
-app.get('/entries', async (req, res) => {
-	const entries = await Entry.find();
+// gets all items or users
+app.get('/items', async (req, res) => {
+	const items = await Item.find();
 
-	res.json(entries);
+	res.json(items);
 });
 
 app.get('/users', async (req, res) => {
@@ -55,19 +55,19 @@ app.get('/users', async (req, res) => {
 	res.json(users);
 });
 
-//  gets all entries of a user
-app.get('/entries/:id', async (req, res) => {
-	const entries = await Entry.find({userId:req.params.id})
+//  gets all items of a user
+app.get('/items/:id', async (req, res) => {
+	const items = await Item.find({userId:req.params.id})
 
-	res.json(entries);
+	res.json(items);
 });
 
-//  gets all entries of a user today
-app.get('/todays-entries/:id', async (req, res) => {
+//  gets all items of a user today
+app.get('/todays-items/:id', async (req, res) => {
     const day = getDay();
-	const entries = await Entry.find({userId:req.params.id, date:day})
+	const items = await Item.find({userId:req.params.id, date:day})
 
-	res.json(entries);
+	res.json(items);
 });
 
 
@@ -86,40 +86,40 @@ app.post('/user/new', (req, res) => {
 	res.json(user); // get back the json response with new user
 });
 
-// new entry POST
-app.post('/entry/new', (req, res) => {
+// new item POST
+app.post('/item/new', (req, res) => {
     const day = getDay();
-    // json code for completing an entry
-	const entry = new Entry({
+    // json code for completing an item
+	const item = new Item({
         userId: req.body.userId,
-		entry: req.body.entry,
+		item: req.body.item,
         calories: req.body.calories,
         protein: req.body.protein,
         date: day
 	});
-	entry.save(); // saves the user to our collection
-	res.json(entry); // get back the json response with new user
+	item.save(); // saves the user to our collection
+	res.json(item); // get back the json response with new user
 });
 
 
 // ------ API UPDATE requests -----
 
-app.get('/entry/hide/:id', async (req, res) => {
-	const entry = await Entry.findById(req.params.id);
+app.get('/item/hide/:id', async (req, res) => {
+	const item = await Item.findById(req.params.id);
 
-	entry.hidden = !entry.hidden;
+	item.hidden = !item.hidden;
 
-	entry.save();
+	item.save();
 
-	res.json(entry);
+	res.json(item);
 })
 
 
 // ------ API DELETE requests -----
 
-// entry DELETE
-app.delete('/entry/delete/:id', async (req, res) => {
-	const result = await Entry.findByIdAndDelete(req.params.id);
+// item DELETE
+app.delete('/item/delete/:id', async (req, res) => {
+	const result = await Item.findByIdAndDelete(req.params.id);
 
 	res.json({result});
 });

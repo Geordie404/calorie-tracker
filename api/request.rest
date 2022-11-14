@@ -1,5 +1,5 @@
 # ----- GET ALL REQUESTS -----
-GET http://localhost:3002/entries
+GET http://localhost:3002/items
 ###
 GET http://localhost:3002/users
 
@@ -10,19 +10,19 @@ POST http://localhost:3002/user/new
 Content-Type: application/json
 
 {
-    "_id": 5,
+    "_id": 7,
     "username": "Geordie",
-    "calories": 2400,
-    "protein": 130
+    "calories": 3200,
+    "protein": 180
 }
 
 ###
-POST http://localhost:3002/entry/new 
+POST http://localhost:3002/item/new 
 Content-Type: application/json
 
 {
-    "userId": 1,
-    "entry": "food",
+    "userId": 6,
+    "item": "food",
     "calories": 90,
     "protein": 10
 }
@@ -30,18 +30,18 @@ Content-Type: application/json
 # ----- GET (UPDATE) REQUESTS ---------
 
 ###
-GET http://localhost:3002/entry/hide/6371858f33314bc9f3163780
+GET http://localhost:3002/item/hide/6371858f33314bc9f3163780
 
 ###
-GET http://localhost:3002/entries/1
+GET http://localhost:3002/items/1
 
 ###
-GET http://localhost:3002/todays-entries/1
+GET http://localhost:3002/todays-items/1
 
 # ----- DELETE REQUESTS ------
 
 ###
-DELETE http://localhost:3002/entry/delete/6371835f3dd20c4120c9dc88
+DELETE http://localhost:3002/item/delete/6371835f3dd20c4120c9dc88
 
 ###
 DELETE http://localhost:3002/user/delete/4

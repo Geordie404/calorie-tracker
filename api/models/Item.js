@@ -1,18 +1,18 @@
-// model file with entry DB schema
+// model file with item DB schema
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const EntrySchema = new Schema({
+const ItemSchema = new Schema({
 
-    // Person - User who made this entry
+    // Person - User who made this item
     userId: {
       type: Number,
       required: [true, 'unique ID is required']
     },
 
     // Food Item Name
-    entry: {
+    item: {
         type: String,
-        required: [true, 'Entry is required']
+        required: [true, 'Item is required']
       },
 
   
@@ -28,7 +28,7 @@ const EntrySchema = new Schema({
       
   
 
-    // if the entry is considered in the calculation or not
+    // if the item is considered in the calculation or not
     hidden: { type: Boolean, default: false },
     
     // date item was entered
@@ -36,5 +36,5 @@ const EntrySchema = new Schema({
 });
 
 // Module exporting code
-const Entry = mongoose.model("Entry", EntrySchema);
-module.exports = Entry;
+const Item = mongoose.model("Item", ItemSchema);
+module.exports = Item;
